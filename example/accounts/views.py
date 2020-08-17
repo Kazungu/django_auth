@@ -6,16 +6,14 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def index(request):
-    return render(request, 'accounts/index.html')
-
+    return render(request,'accounts/index.html')
 def sign_up(request):
     context = {}
     form = UserCreationForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
-            form.save()
+            user = form.save()
             login(request,user)
-            return render(request, 'accounts/index.html')
-            
-    context['form'] = form
+            return render(request,'accounts/index.html')
+    context['form']=form
     return render(request,'registration/sign_up.html',context)
